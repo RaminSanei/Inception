@@ -20,7 +20,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy the nginx configuration file
-COPY ./conf/default /etc/nginx/sites-available/default
+COPY ./conf/default.conf /etc/nginx/sites-available/default
 
 # Create SSL certificate
 RUN openssl req -x509 -nodes -days 365 \
