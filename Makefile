@@ -13,7 +13,7 @@ build: create_dirs
 	${DOCKER_COMPOSE} build
 
 up: build
-	${DOCKER_COMPOSE} up
+	${DOCKER_COMPOSE} up -d
 
 down:
 	${DOCKER_COMPOSE} down
