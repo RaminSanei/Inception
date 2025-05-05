@@ -14,20 +14,19 @@
 
 FROM debian:buster
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-    mariadb-server \
-    curl \
-    gettext \
-    && rm -rf /var/lib/apt/lists/*  # Clean up the apt cache to reduce image size
+# Install MariaDB and necessary tools
+RUN apt-get update && \
+    apt-get install -y mariadb-server curl gettext && \
+    rm -rf /var/lib/apt/lists/*
 
+# Copy custom configs and scripts
 COPY ./tools/start.sh /start.sh
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN mkdir -p /var/lib/mysql/mysql /docker-entrypoint-initdb.d /var/run/mysqld /etc/mysql/conf.d /var/log/mysql \
-    && chmod +x /start.sh
-
-COPY ./conf/50-server.cnf /etc/mysql/50-server.cnf
+# Prepare required directories
+RUN mkdir -p /var/run/mysqld && \
+    chmod 755 /start.sh
 
 EXPOSE 3306
 
-# CMD [ "/start.sh" ]
-ENTRYPOINT [ "/start.sh" ]
+ENTRYPOINT ["/start.sh"]

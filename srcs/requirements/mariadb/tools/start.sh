@@ -28,19 +28,39 @@
 
 #!/bin/bash
 
-MYSQL_DATA_DIR="/var/lib/mysql"
-MYSQL_DB_DIR="$MYSQL_DATA_DIR/mysql"
+#!/bin/bash
 
-if [ ! -d "$MYSQL_DB_DIR" ]; then
-  echo "Initializing MariaDB data directory..."
-  mysql_install_db --user=mysql --datadir="$MYSQL_DATA_DIR"
+set -e
+
+# Ensure MySQL runtime directory exists and is owned properly
+chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
+
+# Initialize database if not yet done
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+    echo "Initializing MariaDB data directory..."
+    mysql_install_db --user=mysql --ldata=/var/lib/mysql
 fi
 
-cat << EOF > /tmp/init.sql
-CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
-CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
-GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'%' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-EOF
+# Start MariaDB in safe mode and run setup
+mysqld_safe --datadir=/var/lib/mysql &
 
-exec mysqld --user=mysql --datadir="$MYSQL_DATA_DIR" --init-file=/tmp/init.sql
+# Wait until MariaDB is ready
+until mysqladmin ping --silent; do
+    echo "Waiting for MariaDB to be ready..."
+    sleep 2
+done
+
+# Execute initial setup
+mysql -u root <<-EOSQL
+    CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
+    CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
+    GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'%';
+    ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+    FLUSH PRIVILEGES;
+EOSQL
+
+# Shutdown safe mode to relaunch normally
+mysqladmin shutdown
+
+# Start MariaDB normally
+exec mysqld_safe --datadir=/var/lib/mysql
