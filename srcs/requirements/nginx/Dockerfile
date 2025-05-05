@@ -1,4 +1,3 @@
-# 
 FROM debian:buster
 
 # install nginx and openssl
