@@ -20,7 +20,7 @@ RUN sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3
     chmod -R 755 /var/www/html
 
 
-WORKDIR /var/www/html
+# WORKDIR /var/www/html
 
 ENTRYPOINT ["/usr/local/bin/setup.sh"]
 # CMD ["/usr/local/bin/setup.sh"]
