@@ -34,13 +34,6 @@
 
 # php-fpm7.3 -F
 
-#!/bin/bash
-
-# set -e  # Exit on any error
-# set -u  # Treat unset variables as errors
-# set -o pipefail  # Catch errors in piped commands
-
-# Configuration
 WP_URL="https://ssanei.42.fr"
 WEB_ROOT="/var/www/html"
 
@@ -48,7 +41,7 @@ cd "$WEB_ROOT"
 
 # Download WordPress core only if not already present
 if [ ! -f wp-config.php ]; then
-    wp core download --allow-root --quiet
+    wp core download --allow-root
 fi
 
 # Wait for DB container to be ready (can be replaced with a proper health check)
@@ -61,7 +54,7 @@ wp config create \
     --dbuser="$DB_USER" \
     --dbpass="$DB_PASSWORD" \
     --dbhost="mariadb" \
-    --allow-root --quiet
+    --allow-root
 
 # Install WordPress core
 wp core install \
@@ -70,13 +63,13 @@ wp core install \
     --admin_user="$WP_ADMIN_USER" \
     --admin_password="$WP_ADMIN_PASSWORD" \
     --admin_email="$WP_ADMIN_EMAIL" \
-    --allow-root --quiet
+    --allow-root
 
 # Create additional author user
 wp user create "$WP_USER" "$WP_USER_EMAIL" \
     --user_pass="$WP_USER_PASSWORD" \
     --role=author \
-    --allow-root --quiet
+    --allow-root
 
 # Update home and site URL
 wp option update home "$WP_URL" --allow-root --quiet
