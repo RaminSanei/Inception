@@ -16,10 +16,20 @@ wp core install --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN_USER
 wp user create $WP_USER $WP_USER_EMAIL --user_pass=$WP_USER_PASSWORD --role=author --allow-root
 
 
-wp option update home "https://ssanei.42.fr" --allow-root
-wp option update siteurl "https://ssanei.42.fr" --allow-root
+# wp option update home "https://ssanei.42.fr" --allow-root
+# wp option update siteurl "https://ssanei.42.fr" --allow-root
 
-chmod -R 755 wp-content/uploads
+# chmod -R 755 wp-content/uploads
+# chown -R www-data:www-data wp-content/uploads
+
+# Update WordPress site URLs via WP-CLI
+wp option update home "https://ssanei.42.fr" --allow-root --quiet
+wp option update siteurl "https://ssanei.42.fr" --allow-root --quiet
+
+# Set secure and correct permissions for uploads directory
+find wp-content/uploads -type d -exec chmod 755 {} \;   # Directories: 755
+find wp-content/uploads -type f -exec chmod 644 {} \;   # Files: 644
 chown -R www-data:www-data wp-content/uploads
+
 
 php-fpm7.3 -F
