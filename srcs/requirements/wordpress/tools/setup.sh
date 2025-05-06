@@ -18,12 +18,6 @@
 # wp user create $WP_USER $WP_USER_EMAIL --user_pass=$WP_USER_PASSWORD --role=author --allow-root
 
 
-# # wp option update home "https://ssanei.42.fr" --allow-root
-# # wp option update siteurl "https://ssanei.42.fr" --allow-root
-
-# # chmod -R 755 wp-content/uploads
-# # chown -R www-data:www-data wp-content/uploads
-
 # wp option update home "$wp_url" --allow-root --quiet
 # wp option update siteurl "$wp_url" --allow-root --quiet
 
@@ -35,9 +29,9 @@
 # php-fpm7.3 -F
 
 WP_URL="https://ssanei.42.fr"
-WEB_ROOT="/var/www/html"
+WEB_ROOT=/var/www/html
 
-cd "$WEB_ROOT"
+cd $WEB_ROOT
 
 # Download WordPress core only if not already present
 if [ ! -f wp-config.php ]; then
@@ -77,11 +71,11 @@ wp option update siteurl "$WP_URL" --allow-root --quiet
 
 # Set secure file/directory permissions for uploads
 UPLOADS_DIR="wp-content/uploads"
-if [ -d "$UPLOADS_DIR" ]; then
+# if [ -d "$UPLOADS_DIR" ]; then
     find "$UPLOADS_DIR" -type d -exec chmod 755 {} \;
     find "$UPLOADS_DIR" -type f -exec chmod 644 {} \;
     chown -R www-data:www-data "$UPLOADS_DIR"
-fi
+# fi
 
 # Start PHP-FPM
 exec php-fpm7.3 -F
