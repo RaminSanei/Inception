@@ -12,7 +12,7 @@ sed -i -r "s/username_here/$DB_USER/" wp-config.php
 sed -i -r "s/password_here/$DB_PASSWORD/" wp-config.php
 sed -i -r "s/localhost/mariadb/" wp-config.php
 
-sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|g' /etc/php/7.3/fpm/pool.d/www.conf
+# sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|g' /etc/php/7.3/fpm/pool.d/www.conf
 
 sleep 10
 
