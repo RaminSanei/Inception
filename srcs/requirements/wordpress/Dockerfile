@@ -9,9 +9,10 @@ FROM debian:buster
 #     php7.3-fpm \
 #     php-mysql \
 #     curl
-RUN apt-get update && apt-get install -y --no-install-recommends php-fpm php-mysql curl wget&& \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends php-fpm php-mysql curl wget
+    # && \
+    # apt-get clean && \
+    # rm -rf /var/lib/apt/lists/*
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/www/html /run/php && \
