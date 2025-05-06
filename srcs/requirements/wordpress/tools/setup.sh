@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /var/www/html
+# cd /var/www/html
 
 if [ ! -f /var/www/html/wp-config.php ]; then
     wp core download --allow-root
@@ -14,7 +14,6 @@ fi
 # sed -i -r "s/password_here/$DB_PASSWORD/" wp-config.php
 # sed -i -r "s/localhost/mariadb/" wp-config.php
 
-# sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|g' /etc/php/7.3/fpm/pool.d/www.conf
 
 sleep 10
 wp config create --url="$DOMAIN_NAME" --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$DB_PASSWORD" --dbhost="mariadb" --allow-root
