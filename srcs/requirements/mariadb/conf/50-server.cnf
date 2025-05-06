@@ -4,7 +4,7 @@ init_file = /etc/mysql/init.sql
 
 [mysqld]
 
-user                    = mysql
+user                    = root
 basedir                 = /usr
 tmpdir                  = /tmp
 datadir                 = /var/lib/mysql
