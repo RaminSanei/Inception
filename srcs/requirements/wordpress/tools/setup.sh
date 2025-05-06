@@ -36,9 +36,9 @@
 
 #!/bin/bash
 
-set -e  # Exit on any error
-set -u  # Treat unset variables as errors
-set -o pipefail  # Catch errors in piped commands
+# set -e  # Exit on any error
+# set -u  # Treat unset variables as errors
+# set -o pipefail  # Catch errors in piped commands
 
 # Configuration
 WP_URL="https://ssanei.42.fr"
