@@ -5,14 +5,13 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     curl \
     gettext
 
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+
 COPY ./tools/start.sh /mariadb/start.sh
 
 RUN mkdir -p /docker-entrypoint-initdb.d \
     /run/mysqld \
     /etc/mysql/mariadb.conf.d && chmod +x /mariadb/start.sh
-
-
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
 EXPOSE 3306
 
