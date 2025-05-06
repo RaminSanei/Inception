@@ -10,9 +10,9 @@ FROM debian:buster
 #     php-mysql \
 #     curl
 RUN apt-get update && apt-get install -y --no-install-recommends php-fpm php-mysql curl wget
-    # && \
-    # apt-get clean && \
-    # rm -rf /var/lib/apt/lists/*
+    && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/www/html /run/php && \
@@ -24,11 +24,11 @@ COPY tools/setup.sh /usr/local/bin/setup.sh
 RUN chmod +x /usr/local/bin/setup.sh
 
 # Install WP-CLI
-# RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
-#     chmod +x wp-cli.phar && \
-#     mv wp-cli.phar /usr/local/bin/wp
-RUN curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && \
-    chmod +x /usr/local/bin/wp
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp
+# RUN curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && \
+#     chmod +x /usr/local/bin/wp
 
 
 # Set working directory
