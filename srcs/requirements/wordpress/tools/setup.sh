@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /var/www/html
+# cd /var/www/html
 
 if [ ! -f /var/www/html/wp-config.php ]; then
     wp core download --allow-root
