@@ -1,5 +1,7 @@
 #!/bin/bash
 
+wp_url = https://ssanei.42.fr;
+
 cd /var/www/html
 
 if [ ! -f /var/www/html/wp-config.php ]; then
@@ -23,8 +25,8 @@ wp user create $WP_USER $WP_USER_EMAIL --user_pass=$WP_USER_PASSWORD --role=auth
 # chown -R www-data:www-data wp-content/uploads
 
 # Update WordPress site URLs via WP-CLI
-wp option update home "https://ssanei.42.fr" --allow-root --quiet
-wp option update siteurl "https://ssanei.42.fr" --allow-root --quiet
+wp option update home "$wp_url" --allow-root --quiet
+wp option update siteurl "$wp_url" --allow-root --quiet
 
 # Set secure and correct permissions for uploads directory
 find wp-content/uploads -type d -exec chmod 755 {} \;   # Directories: 755
