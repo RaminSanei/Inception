@@ -3,12 +3,8 @@
 cd /var/www/html
 
 if [ ! -f /var/www/html/wp-config.php ]; then
-    # wp core download --allow-root
-    wget https://wordpress.org/latest.tar.gz
-    tar -xzvf latest.tar.gz
-    rm latest.tar.gz
-    cp -r wordpress/* .
-    rm -rf wordpress
+    wp core download --allow-root
+    
 fi
 
 sleep 10
