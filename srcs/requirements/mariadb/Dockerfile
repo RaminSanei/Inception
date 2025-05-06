@@ -1,10 +1,10 @@
 FROM debian:bullseye
 
-COPY ./tools/script.sh .
+COPY ./tools/start.sh .
 
 RUN mkdir -p /docker-entrypoint-initdb.d \
     /run/mysqld \
-    /etc/mysql/mariadb.conf.d && chmod +x script.sh
+    /etc/mysql/mariadb.conf.d && chmod +x start.sh
 
 RUN apt update && apt upgrade -y && apt install -y \
     mariadb-server \
@@ -15,4 +15,4 @@ COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
 EXPOSE 3306
 
-ENTRYPOINT ["./script.sh"]
+ENTRYPOINT ["./start.sh"]
