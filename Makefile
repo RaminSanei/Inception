@@ -9,10 +9,15 @@ create_dirs:
 	mkdir -p ${VOLUME_DIR}/mariadb
 	mkdir -p ${VOLUME_DIR}/wordpress
 
-build: create_dirs
+# build: create_dirs
+	# ${DOCKER_COMPOSE} build
+
+build:
 	${DOCKER_COMPOSE} build
 
-up: build
+# up: build
+# 	${DOCKER_COMPOSE} up -d
+up: create_dirs build
 	${DOCKER_COMPOSE} up -d
 
 down:
