@@ -1,24 +1,25 @@
 version: '3.8'
 
 services:
-  mariadb:
-    container_name: mariadb
-    # image: mariadb
-    build: ./requirements/mariadb/
-    image: custom-mariadb
-    volumes:
-      - mariadb:/var/lib/mysql
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx/
+    image: custom-nginx
+    depends_on:
+      - wordpress
+      - mariadb
+    ports:
+      - "443:443"
     env_file:
       - .env
+    volumes:
+      - wordpress:/var/www/html
     networks:
       - mynetwork
-    ports:
-      - "3306:3306"
     restart: always
 
   wordpress:
     container_name: wordpress
-    # image: wordpress
     build: ./requirements/wordpress/
     image: custom-wordpress
     depends_on:
@@ -32,23 +33,21 @@ services:
     networks:
       - mynetwork
     restart: always
-
-  nginx:
-    container_name: nginx
-    # image: nginx
-    build: ./requirements/nginx/
-    image: custom-nginx
-    depends_on:
-      - wordpress
-    ports:
-      - "443:443"
+  
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/
+    image: custom-mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
     env_file:
       - .env
-    volumes:
-      - wordpress:/var/www/html
     networks:
       - mynetwork
+    ports:
+      - "3306:3306"
     restart: always
+
 
 volumes:
   wordpress:
@@ -66,5 +65,4 @@ volumes:
 
 networks:
   mynetwork:
-    # name: mynetwork
     driver: bridge
