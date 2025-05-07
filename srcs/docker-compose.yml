@@ -1,7 +1,5 @@
 version: '3.8'
 
-name: 'wp'
-
 services:
   mariadb:
     container_name: mariadb
@@ -65,7 +63,7 @@ volumes:
       type: none
       device: /home/ssanei/data/mariadb
       o: bind
-      
+
 networks:
   mynetwork:
     # name: mynetwork
