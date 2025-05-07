@@ -1,27 +1,9 @@
-# FROM debian:buster
-
-# # install nginx and openssl
-# RUN apt-get update && apt-get install -y nginx openssl
-
-# # copy the nginx configuration file
-# COPY ./conf/default /etc/nginx/sites-available/default
-# # openssl certificate creation for https
-# RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key\
-# -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=DE"
-
-# # nginx start for web server
-# CMD ["nginx", "-g", "daemon off;"]
-
 FROM debian:buster
 
-# Install nginx and openssl
 RUN apt-get update && \
     apt-get install -y nginx openssl && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy the nginx configuration file
-
-# Create SSL certificate
 RUN openssl req -x509 -nodes -days 365 \
 -newkey rsa:2048 \
 -keyout /etc/ssl/private/nginx-selfsigned.key \
@@ -29,5 +11,5 @@ RUN openssl req -x509 -nodes -days 365 \
 -subj "/C=DE/ST=Baden-Wurttemberg/L=Heilbronn/O=42/OU=Student/CN=ssanei.42.fr"
 
 COPY ./conf/default.conf /etc/nginx/sites-available/default
-# Start nginx
+
 CMD ["nginx", "-g", "daemon off;"]

@@ -40,5 +40,4 @@ find wp-content/uploads -type d -exec chmod 755 {} \;   # Directories: 755
 find wp-content/uploads -type f -exec chmod 644 {} \;   # Files: 644
 chown -R www-data:www-data wp-content/uploads
 
-
 php-fpm7.3 -F
