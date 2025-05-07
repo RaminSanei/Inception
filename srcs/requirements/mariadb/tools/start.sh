@@ -29,7 +29,7 @@ if [ ! -d "$MYSQL_DB_DIR" ]; then
 fi
 
 # Create SQL init file
-cat << EOF > /docker-entrypoint-initdb.d/init.sql
+cat << EOF > /etc/mysql/init.sql
 CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
 CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'%' WITH GRANT OPTION;
