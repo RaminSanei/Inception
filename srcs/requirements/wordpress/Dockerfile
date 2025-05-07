@@ -3,9 +3,9 @@ FROM debian:buster
 RUN apt-get update && apt-get upgrade -y &&  \
     apt-get install -y   php-fpm  php-mysqli  curl
 
-COPY tools/setup.sh /usr/local/bin/setup.sh
+COPY tools/start.sh /usr/local/bin/start.sh
 
-RUN chmod +x /usr/local/bin/setup.sh
+RUN chmod +x /usr/local/bin/start.sh
 
 RUN curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wp
@@ -18,5 +18,5 @@ RUN sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3
 RUN chown -R www-data:www-data /var/www/html /run/php && \
     chmod -R 755 /var/www/html
 
-# ENTRYPOINT ["/usr/local/bin/setup.sh"]
-CMD ["/usr/local/bin/setup.sh"]
+# ENTRYPOINT ["/usr/local/bin/start.sh"]
+CMD ["/usr/local/bin/start.sh"]
