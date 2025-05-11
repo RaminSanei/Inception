@@ -5,7 +5,9 @@ wp_url = https://ssanei.42.fr;
 cd /var/www/html
 
 if [ ! -f /var/www/html/wp-config.php ]; then
-    wp core download --allow-root
+    # wp core download --allow-root
+    wp plugin install woocommerce jetpack contact-form-7 --activate --allow-root
+    wp theme install astra oceanwp --activate --allow-root
     
 fi
 
