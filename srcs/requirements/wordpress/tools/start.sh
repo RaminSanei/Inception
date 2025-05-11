@@ -6,8 +6,8 @@ cd /var/www/html
 
 if [ ! -f /var/www/html/wp-config.php ]; then
     wp core download --allow-root
-    wp plugin install woocommerce jetpack contact-form-7 --activate --allow-root
-    wp theme install astra oceanwp --activate --allow-root
+    # wp plugin install woocommerce jetpack contact-form-7 --activate --allow-root
+    # wp theme install astra oceanwp --activate --allow-root
     
 fi
 
@@ -28,6 +28,8 @@ wp core install \
     --admin_password="$WP_ADMIN_PASSWORD" \
     --admin_email="$WP_ADMIN_EMAIL" \
     --allow-root
+
+wp theme install astra oceanwp --activate --allow-root
 
 wp user create "$WP_USER" "$WP_USER_EMAIL" \
     --user_pass="$WP_USER_PASSWORD" \
