@@ -18,5 +18,4 @@ RUN sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3
 RUN chown -R www-data:www-data /var/www/html /run/php && \
     chmod -R 755 /var/www/html
 
-# ENTRYPOINT ["/usr/local/bin/start.sh"]
 CMD ["/usr/local/bin/start.sh"]
