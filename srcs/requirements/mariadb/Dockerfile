@@ -13,6 +13,6 @@ RUN mkdir -p /docker-entrypoint-initdb.d \
     /run/mysqld \
     /etc/mysql/mariadb.conf.d && chmod +x /mariadb/start.sh
 
-EXPOSE 3306
+# EXPOSE 3306
 
 ENTRYPOINT ["sh","/mariadb/start.sh"]
