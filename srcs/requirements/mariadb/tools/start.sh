@@ -5,8 +5,8 @@ MYSQL_DB_DIR="$MYSQL_DATA_DIR/mysql"
 
 # Initialize DB only if it hasn't been created
 if [ ! -d "$MYSQL_DB_DIR" ]; then
-  echo "Initializing database..."
-  mysqld --user=$DB_USER --initialize-insecure --datadir="$MYSQL_DATA_DIR"
+    echo "Initializing database..."
+    mysqld --user=$DB_USER --initialize-insecure --datadir="$MYSQL_DATA_DIR"
 fi
 
 # Create SQL init file
